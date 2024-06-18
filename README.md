@@ -1,3 +1,7 @@
+The software of this repository is MIT licensed according to the repository I forked it from (referenced below).
+
+The written content is my own work and all rights are reserved. Copyright (c) 2024 Ben Copeland.
+
 # Nextra Docs Template 
 
 This is a template for creating documentation with [Nextra](https://nextra.site).
