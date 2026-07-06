@@ -1,0 +1,70 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md';
+  href?: string;
+  type?: 'button' | 'submit';
+}
+
+const { variant = 'primary', size = 'md', href, type = 'button' } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag href={href} type={href ? undefined : type} class:list={['btn', variant, size]}>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-block;
+    font-family: var(--font-typewriter);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--duration-fast) var(--ease-settle),
+      color var(--duration-fast) var(--ease-settle), border-color var(--duration-fast) var(--ease-settle);
+  }
+
+  .btn.md {
+    font-size: var(--text-sm);
+    padding: 10px 20px;
+  }
+
+  .btn.sm {
+    font-size: var(--text-xs);
+    padding: 6px 12px;
+  }
+
+  .btn.primary {
+    background: var(--accent-primary);
+    color: var(--paper-50);
+    border: 2px solid var(--accent-primary);
+  }
+
+  .btn.primary:hover {
+    background: var(--accent-primary-hover);
+    border-color: var(--accent-primary-hover);
+  }
+
+  .btn.secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: var(--border-rule);
+  }
+
+  .btn.secondary:hover {
+    border-color: var(--border-focus);
+    color: var(--accent-primary);
+  }
+
+  .btn.ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid transparent;
+  }
+
+  .btn.ghost:hover {
+    color: var(--accent-primary);
+  }
+</style>

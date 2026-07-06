@@ -1,0 +1,36 @@
+---
+interface Props {
+  variant?: 'rule' | 'wave' | 'dots';
+}
+
+const { variant = 'dots' } = Astro.props;
+---
+
+{variant === 'rule' && <hr class="rule" />}
+{variant === 'wave' && <div class="wave">~</div>}
+{variant === 'dots' && <div class="dots">· · ·</div>}
+
+<style>
+  .rule {
+    border: none;
+    border-top: var(--border-hairline);
+    width: 60px;
+    margin: var(--space-6) 0;
+  }
+
+  .wave {
+    font-family: var(--font-hand);
+    font-size: var(--text-lg);
+    color: var(--accent-quiet);
+    margin: var(--space-5) 0;
+    text-align: center;
+  }
+
+  .dots {
+    font-family: var(--font-typewriter);
+    letter-spacing: 0.5em;
+    color: var(--text-faint);
+    margin: var(--space-6) 0;
+    text-align: center;
+  }
+</style>

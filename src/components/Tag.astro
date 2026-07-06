@@ -1,0 +1,37 @@
+---
+interface Props {
+  tone?: 'sage' | 'rust' | 'outline';
+}
+
+const { tone = 'sage' } = Astro.props;
+---
+
+<span class:list={['tag', tone]}><slot /></span>
+
+<style>
+  .tag {
+    display: inline-block;
+    font-family: var(--font-typewriter);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: var(--radius-sm);
+  }
+
+  .tag.sage {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+  }
+
+  .tag.rust {
+    background: var(--accent-primary);
+    color: var(--paper-50);
+  }
+
+  .tag.outline {
+    background: transparent;
+    color: var(--text-secondary);
+    border: var(--border-hairline);
+  }
+</style>

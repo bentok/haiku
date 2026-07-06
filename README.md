@@ -1,27 +1,38 @@
-The software of this repository is MIT licensed according to the repository I forked it from (referenced below).
+All content in this repository, including the software and the haiku, is copyright (c) 2024 Ben Copeland. All rights reserved.
 
-The written content is my own work and all rights are reserved. Copyright (c) 2024 Ben Copeland.
+# nephesh
 
-# Nextra Docs Template 
+A personal haiku journal, built with [Astro](https://astro.build).
 
-This is a template for creating documentation with [Nextra](https://nextra.site).
+## Local development
 
-[**Live Demo →**](https://nextra-docs-template.vercel.app)
+```sh
+pnpm install
+pnpm dev
+```
 
-[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
+Visit `localhost:4321`.
 
-## Quick Start
+## Adding a haiku
 
-Click the button to clone this repository and deploy it on Vercel:
+Add a new file to `src/content/haiku/`, e.g. `src/content/haiku/my-new-haiku.md`:
 
-[![](https://vercel.com/button)](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fshuding%2Fnextra-docs-template&showOptionalTeamCreation=false)
+```md
+---
+lines:
+  - "first line"
+  - "second line"
+  - "third line"
+order: 60
+---
+```
 
-## Local Development
+`order` should be one higher than the current highest `order` value in `src/content/haiku/` — the highest `order` is automatically featured on the homepage. Add `date: "YYYY-MM-DD"` if the composition date is known.
 
-First, run `pnpm i` to install the dependencies.
+## Build
 
-Then, run `pnpm dev` to start the development server and visit localhost:3000.
+```sh
+pnpm build
+```
 
-## License
-
-This project is licensed under the MIT License.
+Outputs a static site to `dist/`.

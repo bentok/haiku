@@ -1,0 +1,127 @@
+/* ============================================================
+   NEPHESH — DESIGN TOKENS
+   Kraft paper & espresso. Warm, low-saturation, sun-faded.
+   Ported from design_handoff_nephesh_homepage/reference/tokens/*.css
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Kalam:wght@400;700&display=swap');
+
+:root {
+  /* ---- base palette ---- */
+  --paper-50:   #faf5e9;
+  --paper-100:  #f2e8d5;
+  --paper-200:  #e8dbbd;
+  --paper-300:  #d8c4a0;
+  --paper-400:  #c2a878;
+
+  --ink-900:    #241b14;
+  --ink-700:    #3c2a1e;
+  --ink-500:    #5a4736;
+  --ink-300:    #8c8275;
+
+  --rust-500:   #a34a28;
+  --rust-700:   #7d3719;
+
+  --sage-500:   #6b7a5e;
+  --sage-700:   #4f5c44;
+
+  --stamp-blue: #3f5566;
+
+  /* ---- semantic aliases ---- */
+  --surface-page:      var(--paper-100);
+  --surface-card:       var(--paper-50);
+  --surface-recessed:  var(--paper-200);
+  --surface-inverse:   var(--ink-900);
+
+  --border-subtle:     var(--paper-300);
+  --border-strong:     var(--paper-400);
+  --border-focus:      var(--rust-500);
+
+  --text-primary:      var(--ink-900);
+  --text-secondary:    var(--ink-700);
+  --text-muted:        var(--ink-500);
+  --text-faint:        var(--ink-300);
+  --text-on-inverse:   var(--paper-100);
+
+  --accent-primary:    var(--rust-500);
+  --accent-primary-hover: var(--rust-700);
+  --accent-quiet:      var(--sage-500);
+  --accent-quiet-hover: var(--sage-700);
+
+  --link-color:        var(--rust-500);
+  --link-color-hover:  var(--rust-700);
+
+  --tag-bg:            var(--sage-500);
+  --tag-text:          var(--paper-50);
+
+  --stamp-color:       var(--rust-500);
+
+  /* ---- type ---- */
+  --font-typewriter: 'Special Elite', 'Courier New', ui-monospace, monospace;
+  --font-hand:       'Kalam', 'Segoe Print', cursive;
+
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1.0625rem;
+  --text-md:    1.25rem;
+  --text-lg:    1.75rem;
+  --text-xl:    2.5rem;
+  --text-2xl:   3.25rem;
+
+  --leading-tight:  1.25;
+  --leading-haiku:  1.85;
+  --leading-prose:  1.6;
+
+  --tracking-wide: 0.06em;
+  --tracking-hand: 0.01em;
+
+  /* ---- spacing & radius ---- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  3rem;
+  --space-8:  4.5rem;
+  --space-9:  6.5rem;
+
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-card: 1px;
+
+  --max-width-reading: 42rem;
+  --max-width-page:    68rem;
+
+  /* ---- effects ---- */
+  --border-hairline: 1px solid var(--border-subtle);
+  --border-rule:     1px solid var(--border-strong);
+  --border-stamp:    2px solid var(--accent-primary);
+
+  --shadow-paper: 0 1px 0 rgba(36, 27, 20, 0.04), 0 6px 14px rgba(36, 27, 20, 0.06);
+  --shadow-none:  none;
+
+  --texture-grain-url: url('/textures/paper-grain.png');
+  --texture-grain-size: 256px;
+  --texture-grain-opacity: 0.5;
+
+  --ease-settle: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 400ms;
+  --duration-slow: 900ms;
+}
+
+/* reusable grain overlay — apply on a surface that has position: relative */
+.nph-grain {
+  position: relative;
+}
+.nph-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture-grain-url);
+  background-size: var(--texture-grain-size) var(--texture-grain-size);
+  opacity: var(--texture-grain-opacity);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}

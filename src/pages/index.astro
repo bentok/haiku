@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HaikuCard from '../components/HaikuCard.astro';
+import Divider from '../components/Divider.astro';
+import Button from '../components/Button.astro';
+import { getSortedHaiku, getFeaturedHaiku } from '../lib/haiku';
+
+const featured = await getFeaturedHaiku();
+const sorted = await getSortedHaiku();
+const recent = sorted.filter((h) => h.id !== featured.id).slice(0, 6);
+---
+
+<BaseLayout title="nephesh — a haiku journal" activeNav="home">
+  <header class="intro">
+    <h1 class="wordmark">nephesh</h1>
+    <p class="tagline">a haiku journal</p>
+  </header>
+
+  <div class="featured">
+    <HaikuCard lines={featured.data.lines} date={featured.data.date} href={`/haiku/${featured.id}/`} />
+  </div>
+
+  <Divider variant="wave" />
+
+  <p class="section-label">recent entries</p>
+
+  <div class="grid">
+    {recent.map((h) => (
+      <HaikuCard lines={h.data.lines} date={h.data.date} size="sm" href={`/haiku/${h.id}/`} />
+    ))}
+  </div>
+
+  <div class="cta">
+    <Button variant="secondary" href="/archive/">read the archive</Button>
+  </div>
+</BaseLayout>
+
+<style>
+  .intro {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .wordmark {
+    font-family: var(--font-hand);
+    font-size: var(--text-2xl);
+    color: var(--ink-700);
+    transform: rotate(-1deg);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .tagline {
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-typewriter);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .featured {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .featured :global(.card) {
+    width: 480px;
+  }
+
+  .section-label {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    font-family: var(--font-typewriter);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    margin: 0 0 var(--space-6);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-6);
+    max-width: var(--max-width-reading);
+    margin: 0 auto;
+  }
+
+  .cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
+  }
+</style>

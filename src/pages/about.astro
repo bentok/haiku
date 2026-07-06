@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="about — nephesh" activeNav="about">
+  <div class="about">
+    <h1 class="title">about</h1>
+    <p>
+      It appears you have stumbled across my poetry blog. These are poems I've written over the past two decades.
+      Recently I decided to start publishing them on a blog again, after a long hiatus.
+    </p>
+    <p>
+      I'm a software engineer by trade, and I increasingly am fulfilled with my analogue hobbies of caring for
+      bonsai, gardening, and cultivating an appreciation of the moment by practicing haiku - usually refined in my
+      hobonichi journal with a japanese gel pen before cementing on the site. When I'm being less analogue, I'm often
+      cooking, gaming, enjoying anime or developing video games for fun.
+    </p>
+    <p>
+      If you are looking for my technology-related musings, those can be found at{' '}
+      <a href="https://blog.bencope.land">blog.bencope.land</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: var(--max-width-reading);
+    margin: 0 auto;
+  }
+
+  .title {
+    text-align: center;
+    font-family: var(--font-hand);
+    font-size: var(--text-xl);
+    color: var(--ink-700);
+    transform: rotate(-1deg);
+    margin: 0 0 var(--space-8);
+    font-weight: 400;
+  }
+
+  .about p {
+    font-family: var(--font-typewriter);
+    font-size: var(--text-base);
+    line-height: var(--leading-prose);
+    color: var(--text-primary);
+  }
+</style>

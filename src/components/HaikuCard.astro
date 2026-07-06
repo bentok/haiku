@@ -1,0 +1,66 @@
+---
+import { formatHaikuDate } from '../lib/haiku';
+
+interface Props {
+  lines: string[];
+  date?: string;
+  size?: 'sm' | 'md';
+  href?: string;
+}
+
+const { lines, date, size = 'md', href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag href={href} class:list={['card', size]}>
+  <div class="lines">
+    {lines.map((line) => <span>{line}</span>)}
+  </div>
+  {date && <div class="date">{formatHaikuDate(date)}</div>}
+</Tag>
+
+<style>
+  .card {
+    display: block;
+    background: var(--surface-card);
+    border: var(--border-hairline);
+    box-shadow: var(--shadow-paper);
+    border-radius: var(--radius-card);
+    max-width: var(--max-width-reading);
+    position: relative;
+    color: var(--text-primary);
+  }
+
+  .card.md {
+    padding: var(--space-6);
+  }
+
+  .card.sm {
+    padding: var(--space-5);
+  }
+
+  .lines {
+    font-family: var(--font-typewriter);
+    line-height: var(--leading-haiku);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card.md .lines {
+    font-size: var(--text-base);
+  }
+
+  .card.sm .lines {
+    font-size: var(--text-sm);
+  }
+
+  .date {
+    margin-top: var(--space-5);
+    font-family: var(--font-typewriter);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+</style>
