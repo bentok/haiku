@@ -3,3 +3,14 @@ dist
 .astro
 design_handoff_nephesh_homepage
 .DS_Store
+
+# environment variables
+.env
+.env.production
+
+# .NET build artifacts
+cloud/**/bin/
+cloud/**/obj/
+
+# CDK synth output
+cloud/**/cdk.out/

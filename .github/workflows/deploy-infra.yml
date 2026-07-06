@@ -1,0 +1,46 @@
+name: Deploy CDK Infrastructure
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'cloud/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install CDK
+        run: npm install -g aws-cdk@latest
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.HAIKU_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Deploy CDK stack
+        working-directory: cloud/HaikuCloud
+        run: cdk deploy --require-approval never
+        env:
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_CLOUDFORMATION_ACCOUNT_NUMBER: ${{ secrets.AWS_CLOUDFORMATION_ACCOUNT_NUMBER }}
+          GITHUB_REPO_SLUG: ${{ github.repository }}
