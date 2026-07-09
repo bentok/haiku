@@ -154,16 +154,19 @@ type HaikuStack internal (scope: Construct, id: string, props: IStackProps) as t
                     DefaultRootObject = "index.html",
                     // S3 (via OAC) returns 403, not 404, for missing keys since
                     // ListBucket isn't granted — map both to the same 404 page.
+                    // Astro's special-cased 404.astro always builds to a flat
+                    // /404.html regardless of the directory build format used
+                    // for every other route — hence no /index.html suffix here.
                     ErrorResponses =
                         [| ErrorResponse(
                                HttpStatus = 403.,
                                ResponseHttpStatus = (Some 404. |> Option.toNullable),
-                               ResponsePagePath = "/404/index.html"
+                               ResponsePagePath = "/404.html"
                            )
                            ErrorResponse(
                                HttpStatus = 404.,
                                ResponseHttpStatus = (Some 404. |> Option.toNullable),
-                               ResponsePagePath = "/404/index.html"
+                               ResponsePagePath = "/404.html"
                            ) |]
                 )
             )

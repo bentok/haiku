@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="not found — nephesh">
+  <div class="not-found">
+    <h1 class="title">404</h1>
+    <p>This page has wandered off, like a haiku half-remembered.</p>
+    <a class="back" href="/">← back home</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    max-width: var(--max-width-reading);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .title {
+    font-family: var(--font-hand);
+    font-size: var(--text-xl);
+    color: var(--ink-700);
+    transform: rotate(-1deg);
+    margin: 0 0 var(--space-6);
+    font-weight: 400;
+  }
+
+  .not-found p {
+    font-family: var(--font-typewriter);
+    font-size: var(--text-base);
+    line-height: var(--leading-prose);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-6);
+  }
+
+  .back {
+    font-family: var(--font-typewriter);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .back:hover {
+    color: var(--accent-primary);
+  }
+</style>
