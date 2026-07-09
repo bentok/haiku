@@ -44,3 +44,4 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
           AWS_CLOUDFORMATION_ACCOUNT_NUMBER: ${{ secrets.AWS_CLOUDFORMATION_ACCOUNT_NUMBER }}
           GITHUB_REPO_SLUG: ${{ github.repository }}
+          SITE_DOMAIN: ${{ secrets.SITE_DOMAIN }}

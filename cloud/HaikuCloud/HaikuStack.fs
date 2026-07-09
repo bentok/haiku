@@ -5,6 +5,7 @@ open Amazon.CDK
 open Amazon.CDK.AWS.S3
 open Amazon.CDK.AWS.CloudFront
 open Amazon.CDK.AWS.CloudFront.Origins
+open Amazon.CDK.AWS.CertificateManager
 open Amazon.CDK.AWS.IAM
 open Constructs
 
@@ -132,14 +133,33 @@ type HaikuStack internal (scope: Construct, id: string, props: IStackProps) as t
                 FunctionProps(Code = FunctionCode.FromInline(rewriteFunctionCode), Runtime = FunctionRuntime.JS_2_0)
             )
 
-        // No custom domain / ACM certificate here — the site owner maps their own
-        // domain to the CloudFront distribution's default domain name at their DNS
-        // registrar. This stack only needs to expose that domain name (see outputs).
+        // Optional custom domain: if SITE_DOMAIN is set, provision an ACM cert
+        // (must be us-east-1, same region this stack deploys to) and attach it +
+        // the domain name to the distribution. DNS itself — the CNAME pointing
+        // the domain at the distribution, and the CNAME ACM needs for validation
+        // — is managed by the site owner at their own registrar, not by this
+        // stack, since there's no Route53 hosted zone here.
+        let siteDomain =
+            Environment.GetEnvironmentVariable("SITE_DOMAIN")
+            |> Option.ofObj
+            |> Option.filter (fun s -> s.Trim() <> "")
+
+        let certificate =
+            siteDomain
+            |> Option.map (fun domain ->
+                Certificate(
+                    this,
+                    "HaikuCertificate",
+                    CertificateProps(DomainName = domain, Validation = CertificateValidation.FromDns(null))
+                ))
+
         let distribution =
             Distribution(
                 this,
                 "HaikuDistribution",
                 DistributionProps(
+                    DomainNames = (siteDomain |> Option.map Array.singleton |> Option.toObj),
+                    Certificate = (certificate |> Option.toObj),
                     DefaultBehavior =
                         BehaviorOptions(
                             Origin = S3BucketOrigin.WithOriginAccessControl(bucket),
@@ -222,3 +242,12 @@ type HaikuStack internal (scope: Construct, id: string, props: IStackProps) as t
             )
         )
         |> ignore
+
+        certificate
+        |> Option.iter (fun cert ->
+            CfnOutput(
+                this,
+                "CertificateArn",
+                CfnOutputProps(Value = cert.CertificateArn, ExportName = "HaikuCertificateArn")
+            )
+            |> ignore)
